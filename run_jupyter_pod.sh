@@ -1,6 +1,10 @@
 WORK_DIR=$(cd "$(dirname "$0")"; pwd)
 CONFIG_DIR="$WORK_DIR/.jupyter"
 mkdir -p $CONFIG_DIR
+# 先从 dockerpull.org 镜像代理拉取，然后标记为原始名称
+podman pull dockerpull.org/jupyter/base-notebook:latest
+podman tag dockerpull.org/jupyter/base-notebook:latest docker.io/jupyter/base-notebook:latest
+
 podman run -itd \
     --name jupyter-notebook \
     --restart unless-stopped \
